@@ -1,0 +1,33 @@
+body{
+    background-color: #D4EBEA;
+    color: #272727;
+}
+
+.parent {
+    display: grid;
+    grid-template-columns: 1fr 0fr repeat(3, 0);
+    grid-template-rows: repeat(5, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    }
+    .div1 { grid-area: 1 / 1 / 6 / 2;} 
+    .div2 { grid-area: 1 / 1 / 6 / 2;}
+
+    /* Estilos personalizados para hacer que los videos de YouTube sean responsivos */
+    embed-responsive-container {
+        position: relative;
+        padding-bottom: 56.25%; /* Proporción de aspecto 16:9 */
+        height: 0;
+        overflow: hidden;
+    }
+
+    .embed-responsive-container iframe,
+    .embed-responsive-container object,
+    .embed-responsive-container embed {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+   
