@@ -31,6 +31,21 @@ function sum() {
     document.getElementById("dato1").value = "";
     document.getElementById("dato2").value = "";
     document.getElementById("resultado").innerHTML = "";
+
 }
+
+function evaluarMayorMenor() {
+  let a = parseInt(document.getElementById("dato1").value);
+  let b = parseInt(document.getElementById("dato2").value);
+
+  if (a > b) {
+      document.getElementById("resultado").innerHTML = "El primer número es mayor que el segundo.";
+  } else if (a < b) {
+      document.getElementById("resultado").innerHTML = "El segundo número es mayor que el primero.";
+  } else {
+      document.getElementById("resultado").innerHTML = "Ambos números son iguales.";
+  }
+}
+
 
   
