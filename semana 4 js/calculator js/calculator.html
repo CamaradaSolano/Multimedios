@@ -50,14 +50,15 @@
                         <small id="helpId" class="form-text text-muted">Ingrese su numero</small>
                     </div>
                 </div>
-              <div class="col">
-                <button type="button" class="btn btn-warning" onclick="sum()">Sumar</button>
-                <button type="button" class="btn btn-success" onclick="rest()">Restar</button>
-                <button type="button" class="btn btn-danger" onclick="multipli()">Multiplicar</button>
-                <button type="button" class="btn btn-info" onclick="divide()">Dividir</button>
-                <button type="button" class="btn btn-primary" onclick="evaluarMayorMenor()">Evaluar</button>
-                <button type="button" class="btn btn-light" onclick="reset()">Reset</button>
-              </div>
+                <div class="col">
+                    <button type="button" class="btn btn-warning" onclick="calcular('suma')">Sumar</button>
+                    <button type="button" class="btn btn-success" onclick="calcular('resta')">Restar</button>
+                    <button type="button" class="btn btn-danger" onclick="calcular('multiplicacion')">Multiplicar</button>
+                    <button type="button" class="btn btn-info" onclick="calcular('division')">Dividir</button>
+                    <button type="button" class="btn btn-primary" onclick="calcular('mayormenor')">Evaluar</button>
+                    <button type="button" class="btn btn-light" onclick="reset()">Reset</button>
+                    <button type="button" class="btn btn-dark" onclick="divisionSinDivision()">Resta Divisora</button>
+                </div>                
             </div>
             </div>
           </div>
