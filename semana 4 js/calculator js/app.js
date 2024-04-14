@@ -1,55 +1,73 @@
+function divisionSinDivision(dividendo, divisor) {
+  // Manejo de casos especiales
+  if (divisor === 0) {
+      throw new Error("No se puede dividir por cero");
+  } else if (divisor === 1) {
+      return dividendo;
+  } else if (divisor === -1) {
+      return -dividendo;
+  }
+
+  // Determinar el signo del resultado
+  const signo = Math.sign(dividendo) * Math.sign(divisor);
+
+  // Tomar el valor absoluto de los números
+  dividendo = Math.abs(dividendo);
+  divisor = Math.abs(divisor);
+
+  // Inicializar el contador del resultado
+  let resultado = 0;
+
+  // Restar el divisor del dividendo hasta que el dividendo sea menor que el divisor
+  while (dividendo >= divisor) {
+      dividendo -= divisor;
+      resultado++;
+  }
+
+  // Aplicar el signo al resultado
+  return signo * resultado;
+}
+
 function calcular(operacion) {
-  let a = parseInt(document.getElementById("dato1").value);
-  let b = parseInt(document.getElementById("dato2").value);
+  const dato1 = parseFloat(document.getElementById("dato1").value);
+  const dato2 = parseFloat(document.getElementById("dato2").value);
   let resultado;
 
-  const operations = {
-    suma: (a, b) => a + b,
-    resta: (a, b) => a - b,
-    multiplicacion: (a, b) => a * b,
-    division: (a, b) => a / b,
-    mayormenor: (a, b) => {
-      if (a > b) {
-        return "El primer número es mayor que el segundo.";
-      } else if (a < b) {
-        return "El segundo número es mayor que el primero.";
-      } else {
-        return "Ambos números son iguales.";
-      }
-    },
-    default: () => "Operación no válida"
-  };
+  switch (operacion) {
+      case "suma":
+          resultado = dato1 + dato2;
+          break;
+      case "resta":
+          resultado = dato1 - dato2;
+          break;
+      case "multiplicacion":
+          resultado = dato1 * dato2;
+          break;
+      case "division":
+          try {
+              resultado = divisionSinDivision(dato1, dato2);
+          } catch (error) {
+              alert(error.message);
+              return;
+          }
+          break;
+      case "mayormenor":
+          resultado = dato1 > dato2 ? "El primer número es mayor" : dato1 < dato2 ? "El segundo número es mayor" : "Los números son iguales";
+          break;
+      default:
+          alert("Operación no válida");
+          return;
+  }
 
-  resultado = operations[operacion] ? operations[operacion](a, b) : operations.default();
-
-  document.getElementById("resultado").innerHTML = resultado;
+  document.getElementById("resultado").textContent = resultado;
 }
 
 function reset() {
-  // Limpiar los campos de entrada y el resultado
   document.getElementById("dato1").value = "";
   document.getElementById("dato2").value = "";
-  document.getElementById("resultado").innerHTML = "";
+  document.getElementById("resultado").textContent = "";
 }
 
-function divisionSinDivision(dato1, dato2) {
-  
-  if (dato2 == 0) {
-
-    document.getElementById("resultado").innerHTML = "No se puede dividir por cero.";
-      return;
-  }
-
-  let cociente = 0;
-  let resto = dato1;
-
-  while (resto >= dato2) {
-      resto -= dato2;
-      cociente++;
-  }
-
-  document.getElementById("resultado").innerHTML = cociente;
-}
 
 
   
