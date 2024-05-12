@@ -240,7 +240,7 @@ function eliminar(id){
 }
 
 function modalEliminarConfirmacion(){
-    //document.getElementById("idEliminarModal").value
+    document.getElementById('idEliminarModal').value
 }
 
 //Metodos Fin
