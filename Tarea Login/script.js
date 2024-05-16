@@ -1,54 +1,71 @@
-const loginForm = document.getElementById('loginForm');
-const errorMessage = document.getElementById('error-message');
 
-loginForm.addEventListener('submit', async (event) => {
-  event.preventDefault(); // Prevent default form submission
+//api
+let url = "https://paginas-web-cr.com/Api/apis/";
+let autenticar = "apis/AutenticarUsuario.php";
 
-  const email = document.getElementById('floatingInput').value;
-  const password = document.getElementById('floatingPassword').value;
 
-  // Basic input validation (optional, enhance as needed)
-  if (!email || !password) {
-    errorMessage.textContent = 'Please enter both email and password.';
+function iniciarSesion() {
+  // Obtener elementos del formulario
+  const inputCorreo = document.getElementById('floatingInput');
+  const inputContraseña = document.getElementById('floatingPassword');
+  const botonEnviar = document.querySelector('.btn-primary');
+
+  // Validar correo electrónico y contraseña (opcional, mejorar según sus requisitos)
+  if (!validarCorreoElectronico(inputCorreo.value)) {
+    alert('Ingrese una dirección de correo electrónico válida.');
+    return;
+  }
+  if (inputContraseña.value.length < 4) {
+    alert('La contraseña debe tener al menos 6 caracteres.');
     return;
   }
 
-  // Encode password for basic security (improve with hashing)
-  const encodedPassword = btoa(password); // Base64 encoding
+  // Deshabilitar el botón de envío para evitar múltiples envíos
+  botonEnviar.disabled = true;
 
-  try {
-    const response = await fetch('https://paginas-web-cr.com/Api/apis/AutenticarUsuario.php', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        email,
-        password: encodedPassword
-      })
-    });
+  // Preparar datos de inicio de sesión
+  const datosInicioSesion = {
+    correo: inputCorreo.value,
+    contrasena: inputContraseña.value,
+  };
 
-    if (!response.ok) {
-      const errorData = await response.json(); // Parse JSON error response
-      errorMessage.textContent = errorData.message; // Display error message
-      return;
-    }
-
-    const data = await response.json(); // Parse JSON response
-
-    if (data.status === 'success') {
-      // Handle successful login
-      console.log('Login successful!');
-      // Store authentication token in local storage (e.g., sessionStorage)
-      localStorage.setItem('authToken', data.token);
-      // Redirect to the main application page
-      window.location.href = '/home'; // Replace with your actual main page URL
+  // Enviar solicitud de inicio de sesión
+  fetch(url + autenticar, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(datosInicioSesion),
+  })
+  .then(respuesta => respuesta.json())
+  .then(datos => {
+    if (datos.success) {
+      // Manejar el inicio de sesión exitoso (por ejemplo, redirigir a otra página, establecer el almacenamiento de sesión)
+      console.log('Inicio de sesión exitoso:', datos.message);
+      // Reemplace con su acción deseada después de un inicio de sesión exitoso
+      window.location.href = 'your_success_page.html'; // Ejemplo de redirección
     } else {
-      // Handle failed login
-      errorMessage.textContent = 'Invalid credentials.';
+      // Manejar el error de inicio de sesión
+      console.error('Error de inicio de sesión:', datos.message);
+      alert('Falló el inicio de sesión. Verifique sus credenciales e intente nuevamente.');
+      botonEnviar.disabled = false; // Rehabilitar el botón de envío
     }
-  } catch (error) {
+  })
+  .catch(error => {
     console.error('Error:', error);
-    errorMessage.textContent = 'An error occurred. Please try again later.';
-  }
+    alert('Ocurrió un error durante el inicio de sesión. Inténtelo de nuevo más tarde.');
+    botonEnviar.disabled = false; // Rehabilitar el botón de envío
+  });
+}
+
+// Función opcional de validación de correo electrónico (mejore según sus necesidades)
+function validarCorreoElectronico(correo) {
+  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(correo).toLowerCase());
+}
+
+// Adjuntar un detector de eventos al botón de envío
+document.getElementById('loginForm').addEventListener('submit', function(event) {
+  event.preventDefault(); // Evitar el envío predeterminado del formulario
+  iniciarSesion();
 });
