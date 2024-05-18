@@ -1,6 +1,6 @@
 
 //api
-let url = "https://paginas-web-cr.com/Api/apis/";
+let url = "https://paginas-web-cr.com/Api/";
 let autenticar = "apis/AutenticarUsuario.php";
 
 
